@@ -1,0 +1,4 @@
+## 2024-06-15 - [CRITICAL] Overly Permissive CORS Configuration
+**Vulnerability:** The Spring Boot backend used `@CrossOrigin(origins = "*")` on the `AnalyzeController`, allowing any origin to make cross-origin requests to the API. This is a significant security risk, especially if the API uses cookies or other credentials.
+**Learning:** In a production environment, wildcard CORS configurations should be avoided. The frontend Vite application runs on port 5173, and the backend on 8080.
+**Prevention:** Use a more restrictive CORS policy, preferably loading the allowed origins from external configuration (e.g., `application.properties` or environment variables) so that they can be tailored to the environment (e.g., development vs. production). I replaced `@CrossOrigin(origins = "*")` with `@CrossOrigin(origins = "${app.cors.allowed-origins:http://localhost:5173}")`.
