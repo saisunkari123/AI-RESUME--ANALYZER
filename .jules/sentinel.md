@@ -1,0 +1,4 @@
+## 2024-06-17 - [Fix Overly Permissive CORS]
+**Vulnerability:** The API endpoint used `@CrossOrigin(origins = "*")` which allowed any website to make cross-origin requests to the backend, opening up potential Cross-Site Request Forgery (CSRF) or data leakage vulnerabilities to unauthorized domains.
+**Learning:** Overly permissive CORS policies (wildcard origins) allow potential malicious sites to interact with APIs using user credentials. Furthermore, fixing this by hardcoding a domain is bad practice and would break the application in production environments.
+**Prevention:** Explicitly restrict the `origins` parameter in `@CrossOrigin` annotations using a configuration property (e.g. `@CrossOrigin(origins = "${app.cors.allowed-origins}")`). This prevents unauthorized access while keeping the application flexible across different environments.
