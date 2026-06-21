@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from "react";
 import axios from 'axios';
 import { UploadCloud, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
