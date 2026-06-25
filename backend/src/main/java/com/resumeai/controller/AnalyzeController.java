@@ -6,13 +6,17 @@ import com.resumeai.service.PdfExtractionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/v1")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "${app.cors.allowed-origins}")
 public class AnalyzeController {
+
+    private static final Logger logger = LoggerFactory.getLogger(AnalyzeController.class);
 
     private final PdfExtractionService pdfExtractionService;
     private final AiAnalysisService aiAnalysisService;
@@ -32,7 +36,7 @@ public class AnalyzeController {
             AnalysisResponseDTO response = aiAnalysisService.analyzeResume(resumeText, jobDescription);
             return ResponseEntity.ok(response);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("Error analyzing resume", e);
             return ResponseEntity.internalServerError().build();
         }
     }
