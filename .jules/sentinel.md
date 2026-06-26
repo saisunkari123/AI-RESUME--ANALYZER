@@ -1,0 +1,4 @@
+## 2024-05-24 - Overly Permissive CORS and Stack Trace Leakage
+**Vulnerability:** The application was configured with `@CrossOrigin(origins = "*")` allowing any domain to interact with the API, which can lead to unauthorized cross-origin requests. Additionally, exceptions were being logged using `e.printStackTrace()`, potentially exposing internal application details and stack traces in standard output.
+**Learning:** Hardcoded CORS configurations, especially `*`, are a common security risk in Spring Boot applications that bypass same-origin policy protections. `e.printStackTrace()` leaks internal system details which can aid attackers in reconnaissance.
+**Prevention:** Always configure CORS origins via application properties (`app.cors.allowed-origins`) so they can be securely managed per environment. Use dedicated logging frameworks (like SLF4J) to log errors without exposing internal stack traces directly to the console or response payload.
