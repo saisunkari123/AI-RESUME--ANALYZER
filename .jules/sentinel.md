@@ -1,0 +1,4 @@
+## 2024-05-15 - Overly Permissive CORS Configuration
+**Vulnerability:** The Spring Boot API (`AnalyzeController`) used a hardcoded `@CrossOrigin(origins = "*")` annotation, allowing any domain to make cross-origin requests to the API. This is overly permissive and increases the risk of unauthorized access or CSRF-like attacks if sensitive endpoints were exposed.
+**Learning:** Hardcoded, wildcard CORS configurations are common in initial development but must not reach production. Security configurations, like allowed origins, should be managed via environment-specific properties to ensure appropriate restrictions in different environments.
+**Prevention:** CORS configurations should be driven by external properties (e.g., `application.properties`) and should explicitly list trusted origins instead of using wildcards.
