@@ -1,0 +1,4 @@
+## 2024-07-02 - Overly Permissive CORS Configuration
+**Vulnerability:** The Spring Boot backend was using `@CrossOrigin(origins = "*")` on the `AnalyzeController`, which allows requests from any domain, potentially exposing the API to Cross-Origin Resource Sharing (CORS) related attacks such as CSRF or unauthorized data access if credentials were inadvertently included.
+**Learning:** Hardcoding `*` for CORS origins is a common insecure pattern that can be easily missed during development but poses a security risk in production environments. Configurations should always be externalized and restricted.
+**Prevention:** Avoid using `@CrossOrigin(origins = "*")`. Instead, manage allowed origins securely via configuration properties (e.g., `application.properties`) and inject them using SpEL expressions like `@CrossOrigin(origins = "${app.cors.allowed-origins}")`.
