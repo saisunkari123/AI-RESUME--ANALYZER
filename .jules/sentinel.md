@@ -1,0 +1,4 @@
+## 2024-07-04 - Overly Permissive CORS and Stack Trace Leakage
+**Vulnerability:** The application was using an overly permissive CORS configuration (`@CrossOrigin(origins = "*")`) and exposing stack traces through `e.printStackTrace()` in `AnalyzeController` and `AiAnalysisService`.
+**Learning:** Hardcoding `*` for CORS allows any domain to interact with the API, which can lead to CSRF-like attacks or data exposure. Furthermore, `e.printStackTrace()` logs exceptions to standard output, which can inadvertently expose sensitive implementation details in logs or error messages.
+**Prevention:** Always restrict CORS to specific, allowed origins using configuration properties. Use proper logging frameworks (like SLF4J) instead of `e.printStackTrace()` to safely log errors without leaking sensitive context.
