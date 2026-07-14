@@ -13,6 +13,8 @@ import java.util.Map;
 @Service
 public class AiAnalysisService {
 
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(AiAnalysisService.class);
+
     private final WebClient webClient;
     private final ObjectMapper objectMapper;
 
@@ -62,7 +64,7 @@ public class AiAnalysisService {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Error calling AI analysis API", e);
         }
 
         return new AnalysisResponseDTO(
