@@ -14,6 +14,8 @@ import java.io.IOException;
 @CrossOrigin(origins = "${app.cors.allowed-origins}")
 public class AnalyzeController {
 
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(AnalyzeController.class);
+
     private final PdfExtractionService pdfExtractionService;
     private final AiAnalysisService aiAnalysisService;
 
@@ -32,7 +34,7 @@ public class AnalyzeController {
             AnalysisResponseDTO response = aiAnalysisService.analyzeResume(resumeText, jobDescription);
             return ResponseEntity.ok(response);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("Error analyzing resume", e);
             return ResponseEntity.internalServerError().build();
         }
     }
