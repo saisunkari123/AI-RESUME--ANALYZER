@@ -2,6 +2,8 @@ package com.resumeai.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.resumeai.dto.AnalysisResponseDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -12,6 +14,8 @@ import java.util.Map;
 
 @Service
 public class AiAnalysisService {
+
+    private static final Logger logger = LoggerFactory.getLogger(AiAnalysisService.class);
 
     private final WebClient webClient;
     private final ObjectMapper objectMapper;
@@ -62,7 +66,7 @@ public class AiAnalysisService {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Error analyzing resume", e);
         }
 
         return new AnalysisResponseDTO(
